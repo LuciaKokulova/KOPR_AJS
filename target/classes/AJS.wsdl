@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<wsdl:definitions 
+xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:tns="urn:X-AJS" 
+xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+name="AJS" 
+targetNamespace="urn:X-AJS">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:X-AJS">
+  	  
+      <xsd:element name="pridajCvicenieRequest">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="nazovPredmetu" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="pridajCvicenieResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element name="uuid" type="xsd:string"/>
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      
+      <xsd:element name="duplicitnyZaznam">
+			<xsd:complexType>
+				<xsd:sequence>
+					<xsd:element name="sprava" type="xsd:string" />
+				</xsd:sequence>
+			</xsd:complexType>
+	  </xsd:element>
+      
+    </xsd:schema>
+  </wsdl:types>
+  
+  <wsdl:message name="PridajCvicenieRequest">
+    <wsdl:part element="tns:pridajCvicenieRequest" name="pridajCvicenieRequestPart"/>
+  </wsdl:message>
+  
+  <wsdl:message name="PridajCvicenieResponse">
+    <wsdl:part element="tns:pridajCvicenieResponse" name="pridajCvicenieResponsePart"/>
+  </wsdl:message>
+  
+  <wsdl:message name="DuplicitnyZaznam">
+    <wsdl:part element="tns:duplicitnyZaznam" name="fault"/>
+  </wsdl:message>
+  
+  <wsdl:portType name="AJSPort">
+    <wsdl:operation name="pridajCvicenie">
+      <wsdl:input message="tns:PridajCvicenieRequest"/>
+      <wsdl:output message="tns:PridajCvicenieResponse"/>
+	  <wsdl:fault message="tns:DuplicitnyZaznam" name="duplicitnyZaznam"></wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  
+  <wsdl:binding name="AJSBinding" type="tns:AJSPort">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="pridajCvicenie">
+      <soap:operation soapAction="urn:X-AJS/pridajCvicenie"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="duplicitnyZaznam">
+		<soap:fault name="duplicitnyZaznam" use="literal" />
+	  </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  
+  <wsdl:service name="AJSService">
+    <wsdl:port binding="tns:AJSBinding" name="AJSPort">
+      <soap:address location="http://localhost:8088/AJS/wsdl"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
