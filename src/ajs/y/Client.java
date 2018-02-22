@@ -10,6 +10,8 @@ public class Client {
 
 		PridajCvicenieResponse response = port.pridajCvicenie(request);
 	    System.out.println(response.getUuid());
-	    port.pridajCvicenie(request);
+	    
+	    // test na vyhodenie výnimky
+	    // port.pridajCvicenie(request);
 	}
 }

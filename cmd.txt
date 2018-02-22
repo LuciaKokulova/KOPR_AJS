@@ -1,0 +1,9 @@
+SET METRO_HOME=C:\Users\lucka\metro-standalone-2.3.1\metro
+SET PATH=%PATH%;%METRO_HOME%/bin
+cd C:\Lucka\KOPR_Soap\KOPR_Projekt2
+
+:: server
+wsimport -keep -s src -d bin KOPR2.wsdl
+
+:: klient
+wsimport -keep -wsdllocation http://localhost:8088/ajs/ws?wsdl -d bin /src/movie.wsdl -p ajs.y -s src
